@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html ng-app='mainModule'>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <title>Results</title>
+  <style media="screen">
+    .center-text th,
+    .center-nums td {
+      text-align: center;
+    }
+    
+    .container-custom {
+      width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .pie-chart {
+      width: 100%;
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-custom" ng-controller='mainController as ctrl'>
+    
+    <div class="row">
+      <div class="col-sm-6">
+        <div id="chart_div_solve"></div>
+      </div>
+      <div class="col-sm-6">
+        <div id="chart_div_fill"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <table class='table table-striped table-bordered table-hover table-condensed'>
+          <tr class="center-text">
+            <th colspan="4"></th>
+            <th colspan="2">Boost Vector</th>
+            <th colspan="2">CG Sparse</th>
+            <th colspan="2">Map</th>
+          </tr>
+          <tr style="font-size: 0.8em;" class="center-text">
+            <th>#</th>
+            <th></th>
+            <th>N</th>
+            <th>NNZ</th>
+            <th>Fill</th>
+            <th>Solve</th>
+            <th>Fill</th>
+            <th>Solve</th>
+            <th>Fill</th>
+            <th>Solve</th>
+          </tr>
+          <tr class="center-nums" ng-repeat='result in ctrl.results'>
+            <th>{{$index + 1}}</th>
+            <th>{{result.name}}</th>
+            <th>{{result.n}}</th>
+            <th>{{result.nnz}}</th>
+
+            <td class="alert-info" ng-class="{'alert-danger': result.results.cg_boost_vectors.fill==0 }">{{result.results.cg_boost_vectors.fill}}</td>
+            <td class="alert-success" ng-class="{'alert-danger': result.results.cg_boost_vectors.solve==0 }">{{result.results.cg_boost_vectors.solve}}</td>
+
+            <td class="alert-info" ng-class="{'alert-danger': result.results.cg_sparse.fill==0 }">{{result.results.cg_sparse.fill}}</td>
+            <td class="alert-success" ng-class="{'alert-danger': result.results.cg_sparse.solve==0 }">{{result.results.cg_sparse.solve}}</td>
+
+            <td class="alert-info" ng-class="{'alert-danger': result.results.cg_maps.fill==0 }">{{result.results.cg_maps.fill}}</td>
+            <td class="alert-success" ng-class="{'alert-danger': result.results.cg_maps.solve==0 }">{{result.results.cg_maps.solve}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-6">
+        <div id="piechart_solve" class="pie-chart"></div>
+      </div>
+      <div class="col-sm-6">
+        <div id="piechart_fill" class="pie-chart"></div>
+      </div>
+    </div>
+
+  </div>
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="js/angular.min.js"></script>
+  <script src="js/canvasjs.min.js"></script>
+  <script type="text/javascript">
+    var app = angular.module('mainModule', []);
+    
+      app.controller('mainController', ['$http', function ($http) {
+        
+        var self = this;
+        self.results = [];
+        $http({
+          method: 'GET',
+          url: 'data.json'
+        }).then(function successCallback(response) {
+            self.results = response.data;
+            console.log(response);
+            
+            var fill_inputData = [];
+            var fill_results_1 = [];
+            var fill_results_2 = [];
+            var fill_results_3 = [];
+            
+            var solve_inputData = [];
+            var solve_results_1 = [];
+            var solve_results_2 = [];
+            var solve_results_3 = [];
+            for (var i = 0; i < self.results.length; i++) {
+              
+              // Solve results
+              solve_results_1.push({
+                x: self.results[i].n,
+                y: self.results[i].results.cg_boost_vectors.solve
+              });               
+              solve_results_2.push({
+                x: self.results[i].n,
+                y: self.results[i].results.cg_sparse.solve
+              });                
+              solve_results_3.push({
+                x: self.results[i].n,
+                y: self.results[i].results.cg_maps.solve
+              });    
+              
+              // Fill results
+              fill_results_1.push({
+                x: self.results[i].n,
+                y: self.results[i].results.cg_boost_vectors.fill
+              });               
+              fill_results_2.push({
+                x: self.results[i].n,
+                y: self.results[i].results.cg_sparse.fill
+              });                
+              fill_results_3.push({
+                x: self.results[i].n,
+                y: self.results[i].results.cg_maps.fill
+              });    
+            }
+            
+            solve_inputData.push({
+              type: "line",
+              name: 'Boost Vectors',
+              showInLegend: true,
+              dataPoints: solve_results_1
+            });            
+            solve_inputData.push({
+              type: "line",
+              name: 'CG Sparse',
+              showInLegend: true,
+              dataPoints: solve_results_2
+            });            
+            solve_inputData.push({
+              type: "line",
+              name: 'Map',
+              showInLegend: true,
+              dataPoints: solve_results_3
+            });
+            
+            fill_inputData.push({
+              type: "line",
+              name: 'Boost Vectors',
+              showInLegend: true,
+              dataPoints: fill_results_1
+            });            
+            fill_inputData.push({
+              type: "line",
+              name: 'CG Sparse',
+              showInLegend: true,
+              dataPoints: fill_results_2
+            });            
+            fill_inputData.push({
+              type: "line",
+              name: 'Map',
+              showInLegend: true,
+              dataPoints: fill_results_3
+            });
+              
+            var globalDataFill = [];
+            for (var i = 0; i < fill_results_1.length; i++) {
+              localData = [];            
+              localData.push(fill_results_1[i].x);
+              localData.push(fill_results_1[i].y);
+              localData.push(fill_results_2[i].y);
+              localData.push(fill_results_3[i].y);  
+              globalDataFill.push(localData);
+            }
+            
+            var globalDataSolve = [];
+            for (var i = 0; i < solve_results_1.length; i++) {
+              localData = [];            
+              localData.push(solve_results_1[i].x);
+              localData.push(solve_results_1[i].y);
+              localData.push(solve_results_2[i].y);
+              localData.push(solve_results_3[i].y);  
+              globalDataSolve.push(localData);
+            }
+            
+            // Google Charts
+            google.charts.load('current', {packages: ['corechart', 'line']});
+            google.charts.setOnLoadCallback(drawSolveCurveTypes);   
+            google.charts.setOnLoadCallback(drawFillCurveTypes);
+            
+            google.charts.setOnLoadCallback(drawSolveChart);
+            google.charts.setOnLoadCallback(drawFillChart);
+            
+            console.info(globalDataSolve);
+            
+            var avgSolves = [];
+            for (var i = 1; i < globalDataSolve[0].length; i++) {
+              var sum = 0;
+              for (var j = 0; j < globalDataSolve.length; j++) {
+                sum += globalDataSolve[j][i];
+              }
+              var avg = sum / globalDataSolve.length;
+              avgSolves.push(avg);
+            }
+            console.warn(avgSolves);
+            
+            var avgFills = [];
+            for (var i = 1; i < globalDataFill[0].length; i++) {
+              var sum = 0;
+              for (var j = 0; j < globalDataFill.length; j++) {
+                sum += globalDataFill[j][i];
+              }
+              var avg = sum / globalDataFill.length;
+              avgFills.push(avg);
+            }
+            console.warn(avgFills);
+            
+            function drawSolveChart() {      
+              var data = google.visualization.arrayToDataTable([
+                ['Task', 'Solve speed'],
+                [solve_inputData[0].name, avgSolves[0]],
+                [solve_inputData[1].name, avgSolves[1]],
+                [solve_inputData[2].name, avgSolves[2]]
+              ]);
+      
+              var options = {
+                title: 'Average solve time'
+              };
+      
+              var chart = new google.visualization.PieChart(document.getElementById('piechart_solve'));
+              chart.draw(data, options);
+            }
+            
+            function drawFillChart() {      
+              var data = google.visualization.arrayToDataTable([
+                ['Task', 'Fill speed'],
+                [fill_inputData[0].name, avgFills[0]],
+                [fill_inputData[1].name, avgFills[1]],
+                [fill_inputData[2].name, avgFills[2]]
+              ]);
+      
+              var options = {
+                title: 'Average fill time'
+              };
+      
+              var chart = new google.visualization.PieChart(document.getElementById('piechart_fill'));
+              chart.draw(data, options);
+            }
+              
+            // Default option object         
+            var options = {
+              'height': 500,
+              hAxis: {
+                title: 'Size (N)'
+              },
+              vAxis: {
+                title: 'Milliseconds'
+              },
+              pointSize: 5
+            };
+            
+            function drawSolveCurveTypes() {
+              var data = new google.visualization.DataTable();
+              data.addColumn('number', 'Time');
+              data.addColumn('number', solve_inputData[0].name);
+              data.addColumn('number', solve_inputData[1].name);
+              data.addColumn('number', solve_inputData[2].name);
+        
+              data.addRows(globalDataSolve);
+              
+              var chart = new google.visualization.LineChart(document.getElementById('chart_div_solve'));
+
+              options.title = 'Solve';
+              chart.draw(data, options);
+            }            
+            
+            
+            
+            function drawFillCurveTypes() {
+              var data = new google.visualization.DataTable();
+              data.addColumn('number', 'Time');
+              data.addColumn('number', fill_inputData[0].name);
+              data.addColumn('number', fill_inputData[1].name);
+              data.addColumn('number', fill_inputData[2].name);
+        
+              data.addRows(globalDataFill);
+        
+              var chart = new google.visualization.LineChart(document.getElementById('chart_div_fill'));
+              
+              options.title = 'Fill';
+              chart.draw(data, options);
+            }
+              
+              
+          }, function errorCallback(response) {
+            console.log(response);
+          });
+          
+      }]);
+  </script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
