@@ -18,6 +18,7 @@
 #include "..\SparseLib\CgVectors.h"
 #include "..\SparseLib\CgBoostVectors.h"
 #include "..\SparseLib\CgMaps.h"
+#include "..\SparseLib\CRSFormat.h"
 
 // test comment
 //#include "boost\numeric\ublas\matrix_vector.hpp"
@@ -28,7 +29,6 @@
 #include "boost\filesystem.hpp"
 #include "boost\regex.hpp"
 #include "boost\algorithm\string\predicate.hpp" // For string comparison
-#include "..\SparseLib\Helper.h"
 
 using namespace boost::filesystem;
 using namespace std;
@@ -285,6 +285,13 @@ int main()
 
 			// Clear Xs
 			//memset(x0, 0, sizeof(double) * n);
+
+			// CRS Format
+			abs = new CRSFormat(matrixDatas[i], a, x0);			
+			workingTimes = calculateAverageWorkingTime(abs, typeIndex, genType, a, x0, n);
+			cout << "[CG_CRS_FORMAT] FILL: " << workingTimes.first << ", CALCULATE: " << workingTimes.second << endl;
+			jsonOfs << "\"cg_crs_format\":{\"fill\":" << workingTimes.first << ",\"solve\":" << workingTimes.second << "},";
+			delete abs;
 
 			abs = new CgBoostVectors(matrixDatas[i], a, x0);
 			// Version 1			

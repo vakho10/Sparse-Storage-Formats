@@ -44,6 +44,7 @@
             <th colspan="2">Boost Vector</th>
             <th colspan="2">CG Sparse</th>
             <th colspan="2">Map</th>
+            <th colspan="2">CRS</th>
           </tr>
           <tr style="font-size: 0.8em;" class="center-text">
             <th>#</th>
@@ -71,6 +72,9 @@
 
             <td class="alert-info" ng-class="{'alert-danger': result.results.cg_maps.fill==0 }">{{result.results.cg_maps.fill}}</td>
             <td class="alert-success" ng-class="{'alert-danger': result.results.cg_maps.solve==0 }">{{result.results.cg_maps.solve}}</td>
+			
+			<td class="alert-info" ng-class="{'alert-danger': result.results.cg_crs_format.fill==0 }">{{result.results.cg_crs_format.fill}}</td>
+            <td class="alert-success" ng-class="{'alert-danger': result.results.cg_crs_format.solve==0 }">{{result.results.cg_crs_format.solve}}</td>
           </tr>
         </table>
       </div>
@@ -108,11 +112,13 @@
             var fill_results_1 = [];
             var fill_results_2 = [];
             var fill_results_3 = [];
+			var fill_results_4 = [];
             
             var solve_inputData = [];
             var solve_results_1 = [];
             var solve_results_2 = [];
             var solve_results_3 = [];
+            var solve_results_4 = [];
             for (var i = 0; i < self.results.length; i++) {
               
               // Solve results
@@ -127,7 +133,11 @@
               solve_results_3.push({
                 x: self.results[i].n,
                 y: self.results[i].results.cg_maps.solve
-              });    
+              });   
+			  solve_results_4.push({
+                x: self.results[i].n,
+                y: self.results[i].results.cg_crs_format.solve
+              });  			  
               
               // Fill results
               fill_results_1.push({
@@ -141,6 +151,10 @@
               fill_results_3.push({
                 x: self.results[i].n,
                 y: self.results[i].results.cg_maps.fill
+              });  
+			  fill_results_4.push({
+                x: self.results[i].n,
+                y: self.results[i].results.cg_crs_format.fill
               });    
             }
             
@@ -162,6 +176,12 @@
               showInLegend: true,
               dataPoints: solve_results_3
             });
+			solve_inputData.push({
+              type: "line",
+              name: 'CG CRS',
+              showInLegend: true,
+              dataPoints: solve_results_4
+            });
             
             fill_inputData.push({
               type: "line",
@@ -181,6 +201,12 @@
               showInLegend: true,
               dataPoints: fill_results_3
             });
+			fill_inputData.push({
+              type: "line",
+              name: 'CRS',
+              showInLegend: true,
+              dataPoints: fill_results_4
+            });
               
             var globalDataFill = [];
             for (var i = 0; i < fill_results_1.length; i++) {
@@ -189,6 +215,7 @@
               localData.push(fill_results_1[i].y);
               localData.push(fill_results_2[i].y);
               localData.push(fill_results_3[i].y);  
+              localData.push(fill_results_4[i].y);  
               globalDataFill.push(localData);
             }
             
@@ -199,6 +226,7 @@
               localData.push(solve_results_1[i].y);
               localData.push(solve_results_2[i].y);
               localData.push(solve_results_3[i].y);  
+              localData.push(solve_results_4[i].y);  
               globalDataSolve.push(localData);
             }
             
@@ -239,7 +267,8 @@
                 ['Task', 'Solve speed'],
                 [solve_inputData[0].name, avgSolves[0]],
                 [solve_inputData[1].name, avgSolves[1]],
-                [solve_inputData[2].name, avgSolves[2]]
+                [solve_inputData[2].name, avgSolves[2]],
+                [solve_inputData[3].name, avgSolves[3]]
               ]);
       
               var options = {
@@ -255,7 +284,8 @@
                 ['Task', 'Fill speed'],
                 [fill_inputData[0].name, avgFills[0]],
                 [fill_inputData[1].name, avgFills[1]],
-                [fill_inputData[2].name, avgFills[2]]
+                [fill_inputData[2].name, avgFills[2]],
+                [fill_inputData[3].name, avgFills[3]]
               ]);
       
               var options = {
@@ -284,6 +314,7 @@
               data.addColumn('number', solve_inputData[0].name);
               data.addColumn('number', solve_inputData[1].name);
               data.addColumn('number', solve_inputData[2].name);
+              data.addColumn('number', solve_inputData[3].name);
         
               data.addRows(globalDataSolve);
               
@@ -301,6 +332,7 @@
               data.addColumn('number', fill_inputData[0].name);
               data.addColumn('number', fill_inputData[1].name);
               data.addColumn('number', fill_inputData[2].name);
+              data.addColumn('number', fill_inputData[3].name);
         
               data.addRows(globalDataFill);
         
