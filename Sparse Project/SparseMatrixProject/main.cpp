@@ -222,7 +222,7 @@ int main()
 
 	try {
 		// Loop through matrices and do the calculations
-		for (unsigned int i = 0; i < matrixDatas.size(); i++)
+		for (unsigned int i = 25; i < matrixDatas.size(); i++)
 		{
 			string name = matrixDatas[i].name;
 			string path = matrixDatas[i].path;

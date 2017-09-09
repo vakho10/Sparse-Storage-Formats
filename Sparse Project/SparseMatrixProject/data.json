@@ -1,1 +1,600 @@
-[{"name":"LFAT5.mtx","n":14,"nnz":30,"results":{"cg_sparse":{"fill":0.0580025,"solve":0.00761963},"cg_crs_format":{"fill":0.0583135,"solve":0.00668661},"cg_boost_vectors":{"fill":0.0561364,"solve":0.0443182},"cg_maps":{"fill":0.0564474,"solve":0.179139}}},{"name":"LFAT5_E.mtx","n":14,"nnz":30,"results":{"cg_sparse":{"fill":0.056914,"solve":0.00653111},"cg_crs_format":{"fill":0.059713,"solve":0.00668661},"cg_boost_vectors":{"fill":0.0555144,"solve":0.0441627},"cg_maps":{"fill":0.0625121,"solve":0.189713}}},{"name":"LFAT5_M.mtx","n":14,"nnz":30,"results":{"cg_sparse":{"fill":0.0660886,"solve":0.00497608},"cg_crs_format":{"fill":0.0611125,"solve":0.00497608},"cg_boost_vectors":{"fill":0.0631341,"solve":0.0332776},"cg_maps":{"fill":0.0995217,"solve":0.224235}}},{"name":"LF10.mtx","n":18,"nnz":50,"results":{"cg_sparse":{"fill":0.0937681,"solve":0.0186603},"cg_crs_format":{"fill":0.0959451,"solve":0.0183493},"cg_boost_vectors":{"fill":0.091591,"solve":0.105586},"cg_maps":{"fill":0.0710647,"solve":0.285658}}},{"name":"LF10_E.mtx","n":18,"nnz":50,"results":{"cg_sparse":{"fill":0.0690432,"solve":0.0105742},"cg_crs_format":{"fill":0.105742,"solve":0.0163278},"cg_boost_vectors":{"fill":0.0691987,"solve":0.060957},"cg_maps":{"fill":0.0763518,"solve":0.304008}}},{"name":"LF10_M.mtx","n":18,"nnz":50,"results":{"cg_sparse":{"fill":0.0761963,"solve":0.00964116},"cg_crs_format":{"fill":0.0695097,"solve":0.00933016},"cg_boost_vectors":{"fill":0.100921,"solve":0.0985887},"cg_maps":{"fill":0.0760408,"solve":0.283326}}},{"name":"Trefethen_20.mtx","n":20,"nnz":89,"results":{"cg_sparse":{"fill":0.0715312,"solve":0.00808614},"cg_crs_format":{"fill":0.127823,"solve":0.0130622},"cg_boost_vectors":{"fill":0.0799283,"solve":0.0376316},"cg_maps":{"fill":0.0805504,"solve":0.185204}}},{"name":"ex5.mtx","n":27,"nnz":153,"results":{"cg_sparse":{"fill":0.131089,"solve":0.0608015},"cg_crs_format":{"fill":0.187692,"solve":0.103876},"cg_boost_vectors":{"fill":0.192046,"solve":0.473194},"cg_maps":{"fill":0.177895,"solve":1.93725}}},{"name":"bcsstk01.mtx","n":48,"nnz":224,"results":{"cg_sparse":{"fill":0.122536,"solve":0.119582},"cg_crs_format":{"fill":0.123158,"solve":0.123158},"cg_boost_vectors":{"fill":0.218637,"solve":0.947633},"cg_maps":{"fill":0.190335,"solve":6.28277}}},{"name":"mesh1e1.mtx","n":48,"nnz":177,"results":{"cg_sparse":{"fill":0.115849,"solve":0.0129067},"cg_crs_format":{"fill":0.113983,"solve":0.0124402},"cg_boost_vectors":{"fill":0.117249,"solve":0.0674881},"cg_maps":{"fill":0.141818,"solve":0.740814}}},{"name":"mesh1em1.mtx","n":48,"nnz":177,"results":{"cg_sparse":{"fill":0.114605,"solve":0.0209929},"cg_crs_format":{"fill":0.113672,"solve":0.0211484},"cg_boost_vectors":{"fill":0.117093,"solve":0.111651},"cg_maps":{"fill":0.140108,"solve":1.20297}}},{"name":"mesh1em6.mtx","n":48,"nnz":177,"results":{"cg_sparse":{"fill":0.117093,"solve":0.0124402},"cg_crs_format":{"fill":0.112584,"solve":0.0133732},"cg_boost_vectors":{"fill":0.120204,"solve":0.0679546},"cg_maps":{"fill":0.146328,"solve":0.737082}}},{"name":"bcsstm02.mtx","n":66,"nnz":66,"results":{"cg_sparse":{"fill":0.0859929,"solve":0.00730862},"cg_crs_format":{"fill":0.0831939,"solve":0.0062201},"cg_boost_vectors":{"fill":0.0726197,"solve":0.0534929},"cg_maps":{"fill":0.0861484,"solve":0.630563}}},{"name":"nos4.mtx","n":100,"nnz":347,"results":{"cg_sparse":{"fill":0.171986,"solve":0.108696},"cg_crs_format":{"fill":0.168098,"solve":0.106364},"cg_boost_vectors":{"fill":0.175562,"solve":0.572405},"cg_maps":{"fill":0.22268,"solve":9.2961}}},{"name":"bcsstk03.mtx","n":112,"nnz":376,"results":{"cg_sparse":{"fill":0.193445,"solve":0.926796},"cg_crs_format":{"fill":0.186603,"solve":0.907824},"cg_boost_vectors":{"fill":0.202153,"solve":4.81094},"cg_maps":{"fill":0.308362,"solve":81.4981}}},{"name":"bcsstk22.mtx","n":138,"nnz":417,"results":{"cg_sparse":{"fill":0.233876,"solve":0.602262},"cg_crs_format":{"fill":0.22268,"solve":0.606305},"cg_boost_vectors":{"fill":0.246938,"solve":3.42184},"cg_maps":{"fill":0.351747,"solve":66.0474}}},{"name":"bcsstm22.mtx","n":138,"nnz":138,"results":{"cg_sparse":{"fill":0.125024,"solve":0.0517824},"cg_crs_format":{"fill":0.140263,"solve":0.0480503},"cg_boost_vectors":{"fill":0.122847,"solve":0.451891},"cg_maps":{"fill":0.215216,"solve":8.29295}}},{"name":"bcsstm05.mtx","n":153,"nnz":153,"results":{"cg_sparse":{"fill":0.169653,"solve":0.026902},"cg_crs_format":{"fill":0.122225,"solve":0.0183493},"cg_boost_vectors":{"fill":0.113206,"solve":0.169964},"cg_maps":{"fill":0.176184,"solve":3.55526}}},{"name":"nos1.mtx","n":237,"nnz":627,"results":{"cg_sparse":{"fill":0.280682,"solve":8.95477},"cg_crs_format":{"fill":0.226256,"solve":8.19888},"cg_boost_vectors":{"fill":0.257357,"solve":50.0673},"cg_maps":{"fill":0.342106,"solve":1110.68}}},{"name":"mesh3e1.mtx","n":289,"nnz":1089,"results":{"cg_sparse":{"fill":0.265754,"solve":0.0942346},"cg_crs_format":{"fill":0.263732,"solve":0.0973446},"cg_boost_vectors":{"fill":0.273374,"solve":0.47646},"cg_maps":{"fill":0.400264,"solve":12.7161}}},{"name":"mesh3em5.mtx","n":289,"nnz":1089,"results":{"cg_sparse":{"fill":0.335886,"solve":0.0690432},"cg_crs_format":{"fill":0.32189,"solve":0.0688877},"cg_boost_vectors":{"fill":0.345371,"solve":0.359989},"cg_maps":{"fill":0.475527,"solve":9.5446}}},{"name":"bcsstm06.mtx","n":420,"nnz":420,"results":{"cg_sparse":{"fill":0.263577,"solve":0.342261},"cg_crs_format":{"fill":0.252536,"solve":0.321268},"cg_boost_vectors":{"fill":0.231543,"solve":3.02048},"cg_maps":{"fill":0.335419,"solve":95.3388}}},{"name":"bcsstm20.mtx","n":485,"nnz":485,"results":{"cg_sparse":{"fill":0.293433,"solve":1.0627},"cg_crs_format":{"fill":0.279283,"solve":0.984954},"cg_boost_vectors":{"fill":0.27695,"solve":9.2608},"cg_maps":{"fill":0.370874,"solve":317.995}}},{"name":"494_bus.mtx","n":494,"nnz":1080,"results":{"cg_sparse":{"fill":0.500563,"solve":7.1343},"cg_crs_format":{"fill":0.472261,"solve":6.94444},"cg_boost_vectors":{"fill":0.518135,"solve":47.6588},"cg_maps":{"fill":0.647357,"solve":1781.9}}},{"name":"bcsstm19.mtx","n":817,"nnz":817,"results":{"cg_sparse":{"fill":0.480192,"solve":2.87073},"cg_crs_format":{"fill":0.463242,"solve":2.71259},"cg_boost_vectors":{"fill":0.447848,"solve":25.7979},"cg_maps":{"fill":0.566185,"solve":1261.86}}},{"name":"bcsstm08.mtx","n":1074,"nnz":1074,"results":{"cg_sparse":{"fill":0.41006,"solve":1.31151},"cg_crs_format":{"fill":0.383469,"solve":1.19162},"cg_boost_vectors":{"fill":0.350347,"solve":11.8411},"cg_maps":{"fill":0.51518,"solve":720.999}}},{"name":"bcsstm09.mtx","n":1083,"nnz":1083,"results":{"cg_sparse":{"fill":0.640204,"solve":0.0197488},"cg_crs_format":{"fill":0.62481,"solve":0.0205263},"cg_boost_vectors":{"fill":0.552034,"solve":0.208062},"cg_maps":{"fill":0.695719,"solve":10.7668}}},{"name":"bcsstm11.mtx","n":1473,"nnz":1473,"results":{"cg_sparse":{"fill":0.857286,"solve":0.273529},"cg_crs_format":{"fill":0.823231,"solve":0.27213},"cg_boost_vectors":{"fill":0.746879,"solve":2.41278},"cg_maps":{"fill":0.955097,"solve":186.386}}},{"name":"bcsstm26.mtx","n":1922,"nnz":1922,"results":{"cg_sparse":{"fill":1.2025,"solve":32.2458},"cg_crs_format":{"fill":1.1543,"solve":30.2443},"cg_boost_vectors":{"fill":1.08385,"solve":278.768},"cg_maps":{"fill":1.28756,"solve":27857.1}}}]
+[
+    {
+        "name": "bcsstk34.mtx",
+        "n": 588,
+        "nnz": 11003,
+        "results": {
+            "cg_sparse": {
+                "fill": 4.66318,
+                "solve": 33.8396
+            },
+            "cg_crs_format": {
+                "fill": 4.3783,
+                "solve": 34.545
+            },
+            "cg_boost_vectors": {
+                "fill": 10.5141,
+                "solve": 93.2195
+            },
+            "cg_maps": {
+                "fill": 10.1244,
+                "solve": 2284.95
+            }
+        }
+    },
+    {
+        "name": "Trefethen_700.mtx",
+        "n": 700,
+        "nnz": 6677,
+        "results": {
+            "cg_sparse": {
+                "fill": 1.87162,
+                "solve": 6.42408
+            },
+            "cg_crs_format": {
+                "fill": 1.3143,
+                "solve": 5.07806
+            },
+            "cg_boost_vectors": {
+                "fill": 7.14592,
+                "solve": 21.9879
+            },
+            "cg_maps": {
+                "fill": 3.79455,
+                "solve": 856.627
+            }
+        }
+    },
+    {
+        "name": "msc00726.mtx",
+        "n": 726,
+        "nnz": 17622,
+        "results": {
+            "cg_sparse": {
+                "fill": 7.34465,
+                "solve": 75.1505
+            },
+            "cg_crs_format": {
+                "fill": 7.11669,
+                "solve": 76.9854
+            },
+            "cg_boost_vectors": {
+                "fill": 29.9344,
+                "solve": 176.023
+            },
+            "cg_maps": {
+                "fill": 15.2398,
+                "solve": 4953.46
+            }
+        }
+    },
+    {
+        "name": "msc01050.mtx",
+        "n": 1050,
+        "nnz": 15103,
+        "results": {
+            "cg_sparse": {
+                "fill": 7.1593,
+                "solve": 2687.22
+            },
+            "cg_crs_format": {
+                "fill": 6.9559,
+                "solve": 2672.62
+            },
+            "cg_boost_vectors": {
+                "fill": 46.1395,
+                "solve": 7153.31
+            },
+            "cg_maps": {
+                "fill": 13.644,
+                "solve": 351913
+            }
+        }
+    },
+    {
+        "name": "msc01440.mtx",
+        "n": 1440,
+        "nnz": 23855,
+        "results": {
+            "cg_sparse": {
+                "fill": 11.0465,
+                "solve": 624.275
+            },
+            "cg_crs_format": {
+                "fill": 10.8403,
+                "solve": 641.683
+            },
+            "cg_boost_vectors": {
+                "fill": 141.369,
+                "solve": 1611.77
+            },
+            "cg_maps": {
+                "fill": 21.9659,
+                "solve": 91592
+            }
+        }
+    },
+    {
+        "name": "ex33.mtx",
+        "n": 1733,
+        "nnz": 11961,
+        "results": {
+            "cg_sparse": {
+                "fill": 5.4295,
+                "solve": 3861.71
+            },
+            "cg_crs_format": {
+                "fill": 5.24072,
+                "solve": 3867.68
+            },
+            "cg_boost_vectors": {
+                "fill": 9.12981,
+                "solve": 15347.8
+            },
+            "cg_maps": {
+                "fill": 9.96237,
+                "solve": 1.04916e+06
+            }
+        }
+    },
+    {
+        "name": "ex3.mtx",
+        "n": 1821,
+        "nnz": 27253,
+        "results": {
+            "cg_sparse": {
+                "fill": 12.7931,
+                "solve": 1330.84
+            },
+            "cg_crs_format": {
+                "fill": 12.5885,
+                "solve": 1371.19
+            },
+            "cg_boost_vectors": {
+                "fill": 26.3522,
+                "solve": 3785.89
+            },
+            "cg_maps": {
+                "fill": 23.7949,
+                "solve": 192735
+            }
+        }
+    },
+    {
+        "name": "nasa1824.mtx",
+        "n": 1824,
+        "nnz": 20516,
+        "results": {
+            "cg_sparse": {
+                "fill": 10.1126,
+                "solve": 447.097
+            },
+            "cg_crs_format": {
+                "fill": 9.9151,
+                "solve": 444.313
+            },
+            "cg_boost_vectors": {
+                "fill": 21.8396,
+                "solve": 1404.64
+            },
+            "cg_maps": {
+                "fill": 18.5759,
+                "solve": 86081.8
+            }
+        }
+    },
+    {
+        "name": "Trefethen_2000.mtx",
+        "n": 2000,
+        "nnz": 21953,
+        "results": {
+            "cg_sparse": {
+                "fill": 4.4035,
+                "solve": 31.4679
+            },
+            "cg_crs_format": {
+                "fill": 4.09902,
+                "solve": 30.9231
+            },
+            "cg_boost_vectors": {
+                "fill": 42.3456,
+                "solve": 101.092
+            },
+            "cg_maps": {
+                "fill": 12.8482,
+                "solve": 9318.65
+            }
+        }
+    },
+    {
+        "name": "nasa2146.mtx",
+        "n": 2146,
+        "nnz": 37198,
+        "results": {
+            "cg_sparse": {
+                "fill": 15.4954,
+                "solve": 38.445
+            },
+            "cg_crs_format": {
+                "fill": 15.1294,
+                "solve": 37.2563
+            },
+            "cg_boost_vectors": {
+                "fill": 34.2101,
+                "solve": 105.641
+            },
+            "cg_maps": {
+                "fill": 30.3791,
+                "solve": 5601.54
+            }
+        }
+    },
+    {
+        "name": "ex10.mtx",
+        "n": 2410,
+        "nnz": 28625,
+        "results": {
+            "cg_sparse": {
+                "fill": 14.1217,
+                "solve": 5446.01
+            },
+            "cg_crs_format": {
+                "fill": 13.84,
+                "solve": 5445.95
+            },
+            "cg_boost_vectors": {
+                "fill": 26.2387,
+                "solve": 16828.5
+            },
+            "cg_maps": {
+                "fill": 25.8926,
+                "solve": 1.17668e+06
+            }
+        }
+    },
+    {
+        "name": "ex10hs.mtx",
+        "n": 2548,
+        "nnz": 29928,
+        "results": {
+            "cg_sparse": {
+                "fill": 14.7705,
+                "solve": 5588.17
+            },
+            "cg_crs_format": {
+                "fill": 14.5102,
+                "solve": 5630.85
+            },
+            "cg_boost_vectors": {
+                "fill": 28.0102,
+                "solve": 17534.4
+            },
+            "cg_maps": {
+                "fill": 26.9895,
+                "solve": 1.30451e+06
+            }
+        }
+    },
+    {
+        "name": "ex13.mtx",
+        "n": 2568,
+        "nnz": 39098,
+        "results": {
+            "cg_sparse": {
+                "fill": 15.9924,
+                "solve": 67702.1
+            },
+            "cg_crs_format": {
+                "fill": 15.7744,
+                "solve": 66619
+            },
+            "cg_boost_vectors": {
+                "fill": 34.4909,
+                "solve": 192576
+            },
+            "cg_maps": {
+                "fill": 31.9522,
+                "solve": 1.25984e+07
+            }
+        }
+    },
+    {
+        "name": "nasa2910.mtx",
+        "n": 2910,
+        "nnz": 88603,
+        "results": {
+            "cg_sparse": {
+                "fill": 45.2124,
+                "solve": 2596.87
+            },
+            "cg_crs_format": {
+                "fill": 44.7217,
+                "solve": 2452.88
+            },
+            "cg_boost_vectors": {
+                "fill": 418.303,
+                "solve": 5525.46
+            },
+            "cg_maps": {
+                "fill": 87.7312,
+                "solve": 335493
+            }
+        }
+    },
+    {
+        "name": "ex9.mtx",
+        "n": 3363,
+        "nnz": 51417,
+        "results": {
+            "cg_sparse": {
+                "fill": 22.3737,
+                "solve": 58843.5
+            },
+            "cg_crs_format": {
+                "fill": 22.2674,
+                "solve": 58656.5
+            },
+            "cg_boost_vectors": {
+                "fill": 45.3041,
+                "solve": 159063
+            },
+            "cg_maps": {
+                "fill": 44.438,
+                "solve": 1.23726e+07
+            }
+        }
+    },
+    {
+        "name": "sts4098.mtx",
+        "n": 4098,
+        "nnz": 38227,
+        "results": {
+            "cg_sparse": {
+                "fill": 20.8122,
+                "solve": 5171.21
+            },
+            "cg_crs_format": {
+                "fill": 20.4604,
+                "solve": 5060.49
+            },
+            "cg_boost_vectors": {
+                "fill": 273.08,
+                "solve": 16072.2
+            },
+            "cg_maps": {
+                "fill": 37.7554,
+                "solve": 2.40008e+06
+            }
+        }
+    },
+    {
+        "name": "msc04515.mtx",
+        "n": 4515,
+        "nnz": 51111,
+        "results": {
+            "cg_sparse": {
+                "fill": 20.3491,
+                "solve": 849.826
+            },
+            "cg_crs_format": {
+                "fill": 20.0785,
+                "solve": 818.628
+            },
+            "cg_boost_vectors": {
+                "fill": 54.8697,
+                "solve": 2683.85
+            },
+            "cg_maps": {
+                "fill": 42.3881,
+                "solve": 337529
+            }
+        }
+    },
+    {
+        "name": "nasa4704.mtx",
+        "n": 4704,
+        "nnz": 54730,
+        "results": {
+            "cg_sparse": {
+                "fill": 26.6332,
+                "solve": 4876.69
+            },
+            "cg_crs_format": {
+                "fill": 26.3275,
+                "solve": 4931.58
+            },
+            "cg_boost_vectors": {
+                "fill": 78.3096,
+                "solve": 15455.4
+            },
+            "cg_maps": {
+                "fill": 50.5642,
+                "solve": 2.01958e+06
+            }
+        }
+    },
+    {
+        "name": "crystm01.mtx",
+        "n": 4875,
+        "nnz": 55107,
+        "results": {
+            "cg_sparse": {
+                "fill": 31.2529,
+                "solve": 17.6632
+            },
+            "cg_crs_format": {
+                "fill": 30.9876,
+                "solve": 17.8066
+            },
+            "cg_boost_vectors": {
+                "fill": 79.5769,
+                "solve": 57.4539
+            },
+            "cg_maps": {
+                "fill": 54.8955,
+                "solve": 7897.21
+            }
+        }
+    },
+    {
+        "name": "s3rmt3m3.mtx",
+        "n": 5357,
+        "nnz": 106526,
+        "results": {
+            "cg_sparse": {
+                "fill": 58.098,
+                "solve": 50203.9
+            },
+            "cg_crs_format": {
+                "fill": 57.623,
+                "solve": 50759
+            },
+            "cg_boost_vectors": {
+                "fill": 802.873,
+                "solve": 130035
+            },
+            "cg_maps": {
+                "fill": 105.921,
+                "solve": 1.48147e+07
+            }
+        }
+    },
+    {
+        "name": "s1rmt3m1.mtx",
+        "n": 5489,
+        "nnz": 112505,
+        "results": {
+            "cg_sparse": {
+                "fill": 60.5658,
+                "solve": 2752.27
+            },
+            "cg_crs_format": {
+                "fill": 60.4852,
+                "solve": 2761.88
+            },
+            "cg_boost_vectors": {
+                "fill": 195.219,
+                "solve": 7142.94
+            },
+            "cg_maps": {
+                "fill": 110.098,
+                "solve": 746190
+            }
+        }
+    },
+    {
+        "name": "s1rmq4m1.mtx",
+        "n": 5489,
+        "nnz": 143300,
+        "results": {
+            "cg_sparse": {
+                "fill": 73.7319,
+                "solve": 3254.34
+            },
+            "cg_crs_format": {
+                "fill": 72.8393,
+                "solve": 3205.14
+            },
+            "cg_boost_vectors": {
+                "fill": 358.337,
+                "solve": 7649.99
+            },
+            "cg_maps": {
+                "fill": 146.995,
+                "solve": 699189
+            }
+        }
+    },
+    {
+        "name": "s2rmq4m1.mtx",
+        "n": 5489,
+        "nnz": 143300,
+        "results": {
+            "cg_sparse": {
+                "fill": 76.3409,
+                "solve": 10664
+            },
+            "cg_crs_format": {
+                "fill": 74.2569,
+                "solve": 10902.6
+            },
+            "cg_boost_vectors": {
+                "fill": 348.541,
+                "solve": 26054
+            },
+            "cg_maps": {
+                "fill": 151.872,
+                "solve": 2.29312e+06
+            }
+        }
+    },
+    {
+        "name": "s2rmt3m1.mtx",
+        "n": 5489,
+        "nnz": 112505,
+        "results": {
+            "cg_sparse": {
+                "fill": 61.282,
+                "solve": 11882.4
+            },
+            "cg_crs_format": {
+                "fill": 61.5081,
+                "solve": 11907.7
+            },
+            "cg_boost_vectors": {
+                "fill": 199.567,
+                "solve": 30254.8
+            },
+            "cg_maps": {
+                "fill": 113.031,
+                "solve": 3.22315e+06
+            }
+        }
+    },
+    {
+        "name": "s3rmq4m1.mtx",
+        "n": 5489,
+        "nnz": 143300,
+        "results": {
+            "cg_sparse": {
+                "fill": 79.6416,
+                "solve": 30250.8
+            },
+            "cg_crs_format": {
+                "fill": 74.8139,
+                "solve": 30044.5
+            },
+            "cg_boost_vectors": {
+                "fill": 349.119,
+                "solve": 73109.3
+            },
+            "cg_maps": {
+                "fill": 145.803,
+                "solve": 6.56203e+06
+            }
+        }
+    },
+    {
+        "name": "s3rmt3m1.mtx",
+        "n": 5489,
+        "nnz": 112505,
+        "results": {
+            "cg_sparse": {
+                "fill": 64.0601,
+                "solve": 35249.1
+            },
+            "cg_crs_format": {
+                "fill": 60.6938,
+                "solve": 33627.4
+            },
+            "cg_boost_vectors": {
+                "fill": 194.044,
+                "solve": 85360.6
+            },
+            "cg_maps": {
+                "fill": 110.885,
+                "solve": 9.05453e+06
+            }
+        }
+    }
+]
