@@ -1,4 +1,4 @@
-#Sparse Storage Formats
+# Sparse Storage Formats
 
 This repository consists of 2 separate projects: the main project    (***Sparse Project***) and the secondary project (***NNZ vs    Dense***). 
 
