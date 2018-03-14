@@ -1,0 +1,16 @@
+﻿  Source.cpp
+c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingcholesky\..\SparseLib\MatrixData.h(18): warning C4251: 'MatrixData::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'MatrixData'
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingcholesky\..\SparseLib\MatrixData.h(19): warning C4251: 'MatrixData::path': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'MatrixData'
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingcholesky\..\SparseLib\MatrixData.h(20): warning C4251: 'MatrixData::yPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'MatrixData'
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+Source.cpp(190): warning C4018: '<': signed/unsigned mismatch
+Source.cpp(197): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  7 of 615 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  ComparingCholesky.vcxproj -> C:\Users\v.laluashvili\Desktop\Sparse-Storage-Formats\Sparse Project\Release\ComparingCholesky.exe
+  ComparingCholesky.vcxproj -> C:\Users\v.laluashvili\Desktop\Sparse-Storage-Formats\Sparse Project\Release\ComparingCholesky.pdb (Full PDB)
