@@ -49,8 +49,8 @@ void show_matrix(double *A, int n) {
 }
 
 void show_vector(double *v, int n) {
-	for (int i = 0; i < n; i++)		
-		printf("%2.5f ", v[i]);
+	for (int i = 0; i < n; i++)
+		printf("%f ", v[i]);
 
 	printf("\n");
 }
@@ -98,7 +98,7 @@ double* backwardSubstitution(double *U, double *b, int n, bool isTransposed = tr
 
 			x[i] /= U[i + i * n];
 		}
-	}	
+	}
 	return x;
 }
 
@@ -111,7 +111,7 @@ int main()
 	using namespace std::chrono;
 
 	time_point<high_resolution_clock> start, finish;
-	
+
 	// reusable time variable
 	long long time;
 
@@ -122,6 +122,13 @@ int main()
 	// Get the files with extension .mtx (specify full or relative path)
 	path current_dir("..\\SparseMatrixProject\\matrices\\small");
 	regex pattern("(.*\\.mtx)");
+
+	int size = 4;
+	double* inlineMat = new double[size * size]{ 126, 129, 139, 145, 129, 159, 155, 164, 139, 155, 194, 181, 145, 164, 181, 261 };
+	show_matrix(inlineMat, size);
+
+	double* L = cholesky(inlineMat, size);
+	show_matrix(L, size);
 
 	// Iterate and read matrices
 	for (recursive_directory_iterator iter(current_dir), end; iter != end; ++iter)
@@ -249,12 +256,18 @@ int main()
 			cgSparse->fillMatrix();
 			double solveTime = cgSparse->getMinimal();
 			fprintf(stdout, "CG: %f milliseconds.\n", solveTime);
-			show_vector(x1, N);
-			show_vector(x2, N);
+			show_vector(x1, 5);
+			show_vector(x2, 5);
 
 			free(I);
 			free(J);
 			free(val);
+			free(inlineMat);
+
+			free(L);
+			free(y);
+			free(x1);
+			free(x2);
 
 			free(b);
 
