@@ -5,8 +5,8 @@ c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingch
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingcholesky\..\SparseLib\MatrixData.h(20): warning C4251: 'MatrixData::yPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'MatrixData'
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-Source.cpp(196): warning C4018: '<': signed/unsigned mismatch
-Source.cpp(203): warning C4018: '<': signed/unsigned mismatch
+Source.cpp(218): warning C4018: '<': signed/unsigned mismatch
+Source.cpp(225): warning C4018: '<': signed/unsigned mismatch
   LINK : /LTCG specified but no code generation required; remove /LTCG from the link command line to improve linker performance
   ComparingCholesky.vcxproj -> C:\Users\v.laluashvili\Desktop\Sparse-Storage-Formats\Sparse Project\Release\ComparingCholesky.exe
   ComparingCholesky.vcxproj -> C:\Users\v.laluashvili\Desktop\Sparse-Storage-Formats\Sparse Project\Release\ComparingCholesky.pdb (Full PDB)

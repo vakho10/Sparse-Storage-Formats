@@ -5,7 +5,7 @@ c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\sparselib\m
   c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\sparselib\matrixdata.h(20): warning C4251: 'MatrixData::yPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'MatrixData'
   c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingcholesky\source.cpp(196): warning C4018: '<': signed/unsigned mismatch
-c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingcholesky\source.cpp(203): warning C4018: '<': signed/unsigned mismatch
+c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingcholesky\source.cpp(218): warning C4018: '<': signed/unsigned mismatch
+c:\users\v.laluashvili\desktop\sparse-storage-formats\sparse project\comparingcholesky\source.cpp(225): warning C4018: '<': signed/unsigned mismatch
   ComparingCholesky.vcxproj -> C:\Users\v.laluashvili\Desktop\Sparse-Storage-Formats\Sparse Project\Debug\ComparingCholesky.exe
   ComparingCholesky.vcxproj -> C:\Users\v.laluashvili\Desktop\Sparse-Storage-Formats\Sparse Project\Debug\ComparingCholesky.pdb (Full PDB)

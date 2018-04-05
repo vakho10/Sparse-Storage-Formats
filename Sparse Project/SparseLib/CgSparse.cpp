@@ -3,14 +3,32 @@
 #include <random>
 #include <iostream>
 #include <algorithm>
+#include <utility>
 
 #include "CgSparse.h"
 
-CgSparse::CgSparse(MatrixData matrixData, double* a, double* x0)
+CgSparse::CgSparse(MatrixData matrixData, double* a, double* x0) : CgSparse(a, x0)
 {
 	this->matrixData = matrixData;
+}
+
+CgSparse::CgSparse(double * a, double * x0)
+{
 	this->a = a;
 	this->x0 = x0;
+}
+
+CgSparse::CgSparse(double ** A, int ** Ind, int n, int nnzz)
+{
+	this->A = A;
+	this->Ind = Ind;
+	this->n = n;
+	this->nnzz = nnzz;
+}
+
+CgSparse::CgSparse()
+{
+	// Empty constructor
 }
 
 CgSparse::~CgSparse() {
@@ -317,6 +335,17 @@ double CgSparse::minimal()
 	return TimeCounter::GetCounter();
 }
 
+double CgSparse::minimalCholesky()
+{
+	TimeCounter::StartCounter();
+
+	/*std::pair<double**, int**> L = cholesky();
+	double* y = forwardSubstitution(L);
+	double* x0 = backwardSubstitution(L, y, false);*/
+	
+	return TimeCounter::GetCounter();
+}
+
 void CgSparse::generateNewYs()
 {
 	std::random_device rd;
@@ -329,4 +358,175 @@ void CgSparse::generateNewYs()
 
 void CgSparse::beforeMinimal() {
 	memset(x0, 0, sizeof(double)* matrixData.n);
+}
+
+// A recursive binary search function. It returns 
+// location of x in given array arr[l..r] is present, 
+// otherwise -1
+int CgSparse::binarySearch(int* arr, int l, int r, int x)
+{
+	for (int i = l; i < r; i++) {
+		if (arr[i] == x) {
+			return i;
+		}
+	}
+	return -1;
+	//if (r >= l)
+	//{
+	//	int mid = l + (r - l) / 2;
+
+	//	// If the element is present at the middle 
+	//	// itself
+	//	if (arr[mid] == x)
+	//		return mid;
+
+	//	// If element is smaller than mid, then 
+	//	// it can only be present in left subarray
+	//	if (arr[mid] > x)
+	//		return binarySearch(arr, l, mid - 1, x);
+
+	//	// Else the element can only be present
+	//	// in right subarray
+	//	return binarySearch(arr, mid + 1, r, x);
+	//}
+
+	//// We reach here when element is not 
+	//// present in array
+	//return -1;
+}
+
+
+std::pair<double**, int**> CgSparse::cholesky()
+{
+	// Construct L matrix's value and index arrays
+	int **L_Ind = (int**)malloc((n + 1) * sizeof(int*));	
+	double** L_A = (double **)malloc(sizeof(double *) * n);
+	L_Ind[0] = (int*)malloc((n + 1) * sizeof(int));
+	L_Ind[0][0] = n;
+	for (int i = 1; i <= n; ++i) {
+		L_Ind[i] = (int*)malloc(i * sizeof(int));
+		L_Ind[0][i] = i;
+		L_A[i - 1] = (double*)calloc(i, sizeof(double));
+	}
+	
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j <= i; j++)
+		{
+			double sum = 0;
+
+			if (j == i) // summation for diagnols	
+			{
+				for (int k = 0; k < j; k++) 
+					sum += pow(L_A[j][k], 2);
+
+				// Find column index and element in A matrix
+				int colIndex = binarySearch(Ind[j + 1], 0, Ind[0][j + 1], j);
+				L_A[j][j] = sqrt(
+					(colIndex == -1 ? 0 : A[j][colIndex]) - sum);
+			}
+			else {
+
+				// Evaluating L(i, j) using L(j, j)
+				for (int k = 0; k < j; k++)
+					sum += (L_A[i][k] * L_A[j][k]);
+
+				// Find column index and element in A matrix
+				int colIndex = binarySearch(Ind[i + 1], 0, Ind[0][i + 1], j);
+				L_A[i][j] = (
+					(colIndex == -1 ? 0 : A[i][colIndex]) - sum) / L_A[j][j];
+			}
+		}
+	}
+	std::pair<double**, int**> L;
+	L.first = L_A;
+	L.second = L_Ind;
+
+	return L;
+
+	//double** lower = new double*[n];
+
+
+	/*for (int i = 0; i < n; i++) {
+		for (int j = 0; j < (i + 1); j++) {
+			double s = 0;
+			for (int k = 0; k < j; k++) {
+				s += L[i * n + k] * L[j * n + k];
+			}
+
+			L[i * n + j] = (i == j) ? sqrt(A[i * n + i] - s) : (1.0 / L[j * n + j] * (A[i * n + j] - s));
+		}
+	}*/
+
+	// Decomposing a matrix into Lower Triangular
+	//for (int i = 0; i < n; i++) 
+	//{
+	//	for (int j = 0; j <= i; j++) 
+	//	{
+	//		double sum = 0;
+
+	//		if (j == i) // summation for diagnols	
+	//		{
+	//			for (int k = 0; k < j; k++)
+	//				sum += pow(lower[j * n + k], 2);
+	//			lower[j * n + j] = sqrt(matrix[j * n + j] -
+	//				sum);
+	//		}
+	//		else {
+
+	//			// Evaluating L(i, j) using L(j, j)
+	//			for (int k = 0; k < j; k++)
+	//				sum += (lower[i][k] * lower[j][k]);
+	//			lower[i][j] = (matrix[i][j] - sum) /
+	//				lower[j][j];
+	//		}
+	//	}
+	//}
+}
+
+double* CgSparse::forwardSubstitution(double *L) {
+
+	/*double *y = (double*)calloc(n, sizeof(double));
+	if (y == NULL)
+		exit(EXIT_FAILURE);
+
+	for (int i = 0; i < n; i++) {
+		y[i] = b[i];
+
+		for (int j = 0; j <= i - 1; j++)
+			y[i] -= L[j + i * n] * y[j];
+
+		y[i] /= L[i + i * n];
+	}*/
+	return NULL;
+}
+
+double* CgSparse::backwardSubstitution(double *U, double *b, bool isTransposed = true) {
+
+	//double *x = (double*)calloc(n, sizeof(double));
+	//if (x == NULL)
+	//	exit(EXIT_FAILURE);
+
+	//// Same codes but with i and j swapped for matrix U
+	//if (isTransposed) {
+	//	for (int i = n - 1; i >= 0; i--) {
+	//		x[i] = b[i];
+
+	//		for (int j = i + 1; j < n; j++)
+	//			x[i] -= U[j + i * n] * x[j];
+
+	//		x[i] /= U[i + i * n];
+	//	}
+	//}
+	//else {
+	//	for (int i = n - 1; i >= 0; i--) {
+	//		x[i] = b[i];
+
+	//		for (int j = i + 1; j < n; j++)
+	//			x[i] -= U[i + j * n] * x[j];
+
+	//		x[i] /= U[i + i * n];
+	//	}
+	//}
+	return NULL;
 }

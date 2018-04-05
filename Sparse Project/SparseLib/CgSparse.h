@@ -23,6 +23,9 @@ public:
 	
 	MatrixData matrixData;
 
+	CgSparse();
+	CgSparse(double* a, double* x0);
+	CgSparse(double** A, int** Ind, int n, int nnzz);
 	CgSparse(MatrixData matrixData, double* a, double* x0);
 	~CgSparse();
 
@@ -40,8 +43,13 @@ public:
 
 	virtual double fillMatrix(); 
 	virtual double minimal();
+	virtual double minimalCholesky();
 	virtual void generateNewYs();
 	virtual void beforeMinimal();
+	int binarySearch(int * arr, int l, int r, int x);
+	std::pair<double**, int**> cholesky();
+	double * forwardSubstitution(double * L);
+	double * backwardSubstitution(double * U, double * b, bool isTransposed);
 };
 
 #endif // CG_SPARSE_H

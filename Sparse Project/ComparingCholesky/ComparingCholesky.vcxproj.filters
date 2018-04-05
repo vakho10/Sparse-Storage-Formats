@@ -29,5 +29,8 @@
     <ClInclude Include="json.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

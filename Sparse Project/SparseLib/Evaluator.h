@@ -1,6 +1,8 @@
 #ifndef ABSTRACT_EVALUATOR_H
 #define ABSTRACT_EVALUATOR_H
 
+#include <exception>
+
 #ifdef SPARSELIB_EXPORTS
 #define SPARSELIB_API __declspec(dllexport) 
 #else
@@ -21,8 +23,17 @@ public:
 		beforeMinimal(); 
 		return minimal();
 	}
+
+	double getMinimalCholesky() {
+		beforeMinimal();
+		return minimalCholesky();
+	}
+
 protected:
 	virtual double minimal() = 0;
+	virtual double minimalCholesky() {
+		throw std::exception("Method not implemented!");
+	};
 };
 
 #endif // ABSTRACT_EVALUATOR_H

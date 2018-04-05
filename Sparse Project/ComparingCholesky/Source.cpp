@@ -31,7 +31,7 @@ double* cholesky(double *A, int n)
 		exit(EXIT_FAILURE);
 	}
 
-	for (int i = 0; i < n; i++) {
+	/*for (int i = 0; i < n; i++) {
 		for (int j = 0; j < (i + 1); j++) {
 			double s = 0;
 			for (int k = 0; k < j; k++) {
@@ -39,6 +39,28 @@ double* cholesky(double *A, int n)
 			}
 
 			L[i * n + j] = (i == j) ? sqrt(A[i * n + i] - s) : (1.0 / L[j * n + j] * (A[i * n + j] - s));
+		}
+	}*/
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j <= i; j++)
+		{
+			double sum = 0;
+
+			if (j == i) // summation for diagnols	
+			{
+				for (int k = 0; k < j; k++)
+					sum += pow(L[j * n + k], 2);
+				L[j * n + j] = sqrt(A[j * n + j] - sum);
+			}
+			else {
+
+				// Evaluating L(i, j) using L(j, j)
+				for (int k = 0; k < j; k++)
+					sum += (L[i * n + k] * L[j * n + k]);
+				L[i * n + j] = (A[i * n + j] - sum) / L[j * n + j];
+			}
 		}
 	}
 	return L;
@@ -249,6 +271,7 @@ int main()
 			fprintf(stdout, "Cholevsky: %f milliseconds. \n", time / (double)1000000);
 			choleskyJson["solve"] = time / (double)1000000;
 
+
 			// [2] Solve with "Conjugate Gradient"
 			double* x2 = (double *)calloc(N, sizeof(double));
 			MatrixData matrixData;
@@ -256,20 +279,32 @@ int main()
 			matrixData.nnz = nz;
 			matrixData.yPath = ysPath;
 			matrixData.path = filePath;
-			Evaluator* cgSparse = new CgSparse(matrixData, b, x2);
+			CgSparse* cgSparse = new CgSparse(matrixData, b, x2);
 			cgSparse->fillMatrix();
+
+			std::pair<double**, int**> res = cgSparse->cholesky();
+			for (int i = 0; i < N / 20; i++) {
+				for (int j = 0; j <= i; j++) {
+					fprintf(stdout, "%f ", res.first[i][j]);
+				}
+				printf("\n");
+			}
+			show_vector(L, 20);
+
 			double solveTime = cgSparse->getMinimal();
 			fprintf(stdout, "CG: %f milliseconds.\n", solveTime);
 			cgJson["solve"] = solveTime;
+
+			
 
 			matrixJson["results"].push_back(choleskyJson);
 			matrixJson["results"].push_back(cgJson);
 
 			rootJson.push_back(matrixJson);
 
-			/*show_vector(y, 5);
+			show_vector(y, 5);
 			show_vector(x1, 5);
-			show_vector(x2, 5);*/
+			show_vector(x2, 5);
 
 			free(I);
 			free(J);
@@ -288,7 +323,7 @@ int main()
 	}
 
 	// the setw manipulator was overloaded to set the indentation for pretty printing
-	cout << setw(4) << rootJson << endl;	
+	cout << setw(4) << rootJson << endl;
 
 	// write prettified JSON to file
 	FILE * pFile;
