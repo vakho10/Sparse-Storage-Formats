@@ -47,9 +47,9 @@ public:
 	virtual void generateNewYs();
 	virtual void beforeMinimal();
 	int binarySearch(int * arr, int l, int r, int x);
-	std::pair<double**, int**> cholesky();
-	double * forwardSubstitution(double * L);
-	double * backwardSubstitution(double * U, double * b, bool isTransposed);
+	std::pair<double**, int**>* cholesky();
+	double * forwardSubstitution(std::pair<double**, int**>* L);
+	double * backwardSubstitution(std::pair<double**, int**>* U, double * b, bool isTransposed);
 };
 
 #endif // CG_SPARSE_H

@@ -159,7 +159,6 @@
   <ItemGroup>
     <ClInclude Include="json.hpp" />
     <ClInclude Include="mmio.h" />
-    <ClInclude Include="Source.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SparseLib\SparseLib.vcxproj">

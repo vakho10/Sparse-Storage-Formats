@@ -24,6 +24,16 @@
 #include "..\SparseLib\Evaluator.h"
 #include "..\SparseLib\CgSparse.h"
 
+int countNonZeroes(double* vec, int n) {
+	int sum = 0;
+	for (int i = 0; i < n; i++) {
+		if (vec[i] != 0) {
+			sum += 1;
+		}
+	}
+	return sum;
+}
+
 double* cholesky(double *A, int n)
 {
 	double *L = (double*)calloc(n * n, sizeof(double));
@@ -282,14 +292,29 @@ int main()
 			CgSparse* cgSparse = new CgSparse(matrixData, b, x2);
 			cgSparse->fillMatrix();
 
-			std::pair<double**, int**> res = cgSparse->cholesky();
+			printf("New matrixo formatoo \n");
+			std::pair<double**, int**>* res = cgSparse->cholesky();
+			double* y_sparse = cgSparse->forwardSubstitution(res);
+			double* x1_sparse = cgSparse->backwardSubstitution(res, y_sparse, false);
+
 			for (int i = 0; i < N / 20; i++) {
 				for (int j = 0; j <= i; j++) {
-					fprintf(stdout, "%f ", res.first[i][j]);
+					fprintf(stdout, "%f ", res->first[i][j]);
 				}
+				fprintf(stdout, "%d nnz in row and in %d nnz real", countNonZeroes(res->first[i], res->second[0][i + 1]), cgSparse->Ind[0][i + 1]);
 				printf("\n");
 			}
 			show_vector(L, 20);
+			fprintf(stdout, "%f \n", L[0]);
+			fprintf(stdout, "%f \n", L[N + 0]);
+			fprintf(stdout, "%f \n", L[N + 1]);
+			fprintf(stdout, "%f \n", L[N * 2 + 0]);
+			fprintf(stdout, "%f \n", L[N * 2 + 1]);
+			fprintf(stdout, "%f \n", L[N * 2 + 2]);
+			fprintf(stdout, "%f \n", L[N * 3 + 0]);
+			fprintf(stdout, "%f \n", L[N * 3 + 1]);
+			fprintf(stdout, "%f \n", L[N * 3 + 2]);
+			fprintf(stdout, "%f \n", L[N * 3 + 3]);
 
 			double solveTime = cgSparse->getMinimal();
 			fprintf(stdout, "CG: %f milliseconds.\n", solveTime);
@@ -302,7 +327,9 @@ int main()
 
 			rootJson.push_back(matrixJson);
 
+			show_vector(y_sparse, 5);
 			show_vector(y, 5);
+			show_vector(x1_sparse, 5);
 			show_vector(x1, 5);
 			show_vector(x2, 5);
 

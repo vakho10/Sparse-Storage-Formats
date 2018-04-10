@@ -112,10 +112,10 @@ void CgSparse::MatrixByVector(double **m, int **index, double *x, double* res)
 	}
 }
 
-double CgSparse::fillMatrix() 
+double CgSparse::fillMatrix()
 {
 	TimeCounter::StartCounter();
-	
+
 	/* open an existing file for reading */
 	FILE *infile = fopen(matrixData.path.c_str(), "r");
 
@@ -277,7 +277,7 @@ double CgSparse::fillMatrix()
 		++c;
 	}
 	A[n - 1] = (double*)malloc(c * sizeof(double));
-	Ind[n] = (int*)malloc(c  * sizeof(int));
+	Ind[n] = (int*)malloc(c * sizeof(int));
 	arrayCpy(val, A[n - 1], c);
 	intArrayCpy(ind, Ind[n], c);
 	Ind[0][n] = c;
@@ -342,7 +342,7 @@ double CgSparse::minimalCholesky()
 	/*std::pair<double**, int**> L = cholesky();
 	double* y = forwardSubstitution(L);
 	double* x0 = backwardSubstitution(L, y, false);*/
-	
+
 	return TimeCounter::GetCounter();
 }
 
@@ -396,10 +396,10 @@ int CgSparse::binarySearch(int* arr, int l, int r, int x)
 }
 
 
-std::pair<double**, int**> CgSparse::cholesky()
+std::pair<double**, int**>* CgSparse::cholesky()
 {
 	// Construct L matrix's value and index arrays
-	int **L_Ind = (int**)malloc((n + 1) * sizeof(int*));	
+	int **L_Ind = (int**)malloc((n + 1) * sizeof(int*));
 	double** L_A = (double **)malloc(sizeof(double *) * n);
 	L_Ind[0] = (int*)malloc((n + 1) * sizeof(int));
 	L_Ind[0][0] = n;
@@ -408,7 +408,7 @@ std::pair<double**, int**> CgSparse::cholesky()
 		L_Ind[0][i] = i;
 		L_A[i - 1] = (double*)calloc(i, sizeof(double));
 	}
-	
+
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j <= i; j++)
@@ -417,13 +417,13 @@ std::pair<double**, int**> CgSparse::cholesky()
 
 			if (j == i) // summation for diagnols	
 			{
-				for (int k = 0; k < j; k++) 
+				for (int k = 0; k < j; k++)
 					sum += pow(L_A[j][k], 2);
 
 				// Find column index and element in A matrix
 				int colIndex = binarySearch(Ind[j + 1], 0, Ind[0][j + 1], j);
 				L_A[j][j] = sqrt(
-					(colIndex == -1 ? 0 : A[j][colIndex]) - sum);
+					((colIndex == -1) ? 0 : A[j][colIndex]) - sum);
 			}
 			else {
 
@@ -432,15 +432,18 @@ std::pair<double**, int**> CgSparse::cholesky()
 					sum += (L_A[i][k] * L_A[j][k]);
 
 				// Find column index and element in A matrix
-				int colIndex = binarySearch(Ind[i + 1], 0, Ind[0][i + 1], j);
+				// We only save upper triangular matrix in sparse memory (so i is always less that j)!
+				int findI = i <= j ? i : j;
+				int findJ = i <= j ? j : i;
+				int colIndex = binarySearch(Ind[findI + 1], 0, Ind[0][findI + 1], findJ);
 				L_A[i][j] = (
-					(colIndex == -1 ? 0 : A[i][colIndex]) - sum) / L_A[j][j];
+					(colIndex == -1 ? 0 : A[findI][colIndex]) - sum) / L_A[j][j];
 			}
 		}
 	}
-	std::pair<double**, int**> L;
-	L.first = L_A;
-	L.second = L_Ind;
+	std::pair<double**, int**>* L = new std::pair<double**, int**>();
+	L->first = L_A;
+	L->second = L_Ind;
 
 	return L;
 
@@ -484,49 +487,52 @@ std::pair<double**, int**> CgSparse::cholesky()
 	//}
 }
 
-double* CgSparse::forwardSubstitution(double *L) {
+double* CgSparse::forwardSubstitution(std::pair<double**, int**> *L) {
 
-	/*double *y = (double*)calloc(n, sizeof(double));
+	double *y = (double*)calloc(n, sizeof(double));
 	if (y == NULL)
 		exit(EXIT_FAILURE);
 
 	for (int i = 0; i < n; i++) {
-		y[i] = b[i];
+		y[i] = a[i];
 
-		for (int j = 0; j <= i - 1; j++)
-			y[i] -= L[j + i * n] * y[j];
+		for (int j = 0; j <= i - 1; j++) {
+			/*int colIndex = binarySearch(L->second[i + 1], 0, L->second[0][i + 1], j);
+			y[i] -= L->first[i][colIndex] * y[j];*/
+			y[i] -= L->first[i][j] * y[j];
+		}
 
-		y[i] /= L[i + i * n];
-	}*/
-	return NULL;
+		y[i] /= L->first[i][i];
+	}
+	return y;
 }
 
-double* CgSparse::backwardSubstitution(double *U, double *b, bool isTransposed = true) {
+double* CgSparse::backwardSubstitution(std::pair<double**, int**> *U, double *b, bool isTransposed = true) {
 
-	//double *x = (double*)calloc(n, sizeof(double));
-	//if (x == NULL)
-	//	exit(EXIT_FAILURE);
+	double *x = (double*)calloc(n, sizeof(double));
+	if (x == NULL)
+		exit(EXIT_FAILURE);
 
-	//// Same codes but with i and j swapped for matrix U
-	//if (isTransposed) {
-	//	for (int i = n - 1; i >= 0; i--) {
-	//		x[i] = b[i];
+	// Same codes but with i and j swapped for matrix U
+	if (isTransposed) {
+		for (int i = n - 1; i >= 0; i--) {
+			x[i] = b[i];
 
-	//		for (int j = i + 1; j < n; j++)
-	//			x[i] -= U[j + i * n] * x[j];
+			for (int j = i + 1; j < n; j++)
+				x[i] -= U->first[i][j] * x[j];
 
-	//		x[i] /= U[i + i * n];
-	//	}
-	//}
-	//else {
-	//	for (int i = n - 1; i >= 0; i--) {
-	//		x[i] = b[i];
+			x[i] /= U->first[i][i];
+		}
+	}
+	else {
+		for (int i = n - 1; i >= 0; i--) {
+			x[i] = b[i];
 
-	//		for (int j = i + 1; j < n; j++)
-	//			x[i] -= U[i + j * n] * x[j];
+			for (int j = i + 1; j < n; j++)
+				x[i] -= U->first[j][i] * x[j];
 
-	//		x[i] /= U[i + i * n];
-	//	}
-	//}
-	return NULL;
+			x[i] /= U->first[i][i];
+		}
+	}
+	return x;
 }
