@@ -360,10 +360,8 @@ void CgSparse::beforeMinimal() {
 	memset(x0, 0, sizeof(double)* matrixData.n);
 }
 
-// A recursive binary search function. It returns 
-// location of x in given array arr[l..r] is present, 
-// otherwise -1
-int CgSparse::binarySearch(int* arr, int l, int r, int x)
+// Iterative search
+int CgSparse::iterativeSearch(int* arr, int l, int r, int x)
 {
 	for (int i = l; i < r; i++) {
 		if (arr[i] == x) {
@@ -371,28 +369,35 @@ int CgSparse::binarySearch(int* arr, int l, int r, int x)
 		}
 	}
 	return -1;
-	//if (r >= l)
-	//{
-	//	int mid = l + (r - l) / 2;
+}
 
-	//	// If the element is present at the middle 
-	//	// itself
-	//	if (arr[mid] == x)
-	//		return mid;
+// A recursive binary search function. It returns 
+// location of x in given array arr[l..r] is present, 
+// otherwise -1
+int CgSparse::binarySearch(int* arr, int l, int r, int x)
+{
+	if (r >= l)
+	{
+		int mid = l + (r - l) / 2;
 
-	//	// If element is smaller than mid, then 
-	//	// it can only be present in left subarray
-	//	if (arr[mid] > x)
-	//		return binarySearch(arr, l, mid - 1, x);
+		// If the element is present at the middle 
+		// itself
+		if (arr[mid] == x)
+			return mid;
 
-	//	// Else the element can only be present
-	//	// in right subarray
-	//	return binarySearch(arr, mid + 1, r, x);
-	//}
+		// If element is smaller than mid, then 
+		// it can only be present in left subarray
+		if (arr[mid] > x)
+			return binarySearch(arr, l, mid - 1, x);
 
-	//// We reach here when element is not 
-	//// present in array
-	//return -1;
+		// Else the element can only be present
+		// in right subarray
+		return binarySearch(arr, mid + 1, r, x);
+	}
+
+	// We reach here when element is not 
+	// present in array
+	return -1;
 }
 
 
@@ -403,14 +408,18 @@ std::pair<double**, int**>* CgSparse::cholesky()
 	double** L_A = (double **)malloc(sizeof(double *) * n);
 	L_Ind[0] = (int*)malloc((n + 1) * sizeof(int));
 	L_Ind[0][0] = n;
-	for (int i = 1; i <= n; ++i) {
-		L_Ind[i] = (int*)malloc(i * sizeof(int));
-		L_Ind[0][i] = i;
-		L_A[i - 1] = (double*)calloc(i, sizeof(double));
-	}
+	//for (int i = 1; i <= n; ++i) {
+	//	L_Ind[i] = (int*)malloc(i * sizeof(int));
+	//	L_Ind[0][i] = i;
+	//	L_A[i - 1] = (double*)calloc(i, sizeof(double));
+	//}
 
 	for (int i = 0; i < n; i++)
 	{
+		// create temporary row 
+		double* tmpRow = (double*)calloc(n, sizeof(double));
+
+		int nnzsInTmpRow = 0;
 		for (int j = 0; j <= i; j++)
 		{
 			double sum = 0;
@@ -418,28 +427,52 @@ std::pair<double**, int**>* CgSparse::cholesky()
 			if (j == i) // summation for diagnols	
 			{
 				for (int k = 0; k < j; k++)
-					sum += pow(L_A[j][k], 2);
+					sum += pow(tmpRow[k], 2); // TODO may be sped up
+					//sum += pow(L_A[j][k], 2);
+
 
 				// Find column index and element in A matrix
-				int colIndex = binarySearch(Ind[j + 1], 0, Ind[0][j + 1], j);
-				L_A[j][j] = sqrt(
-					((colIndex == -1) ? 0 : A[j][colIndex]) - sum);
+				int colIndex = iterativeSearch(Ind[j + 1], 0, Ind[0][j + 1], j);
+				//L_A[j][j] = sqrt(((colIndex == -1) ? 0 : A[j][colIndex]) - sum);
+				tmpRow[j] = sqrt(((colIndex == -1) ? 0 : A[j][colIndex]) - sum);
 			}
 			else {
 
 				// Evaluating L(i, j) using L(j, j)
-				for (int k = 0; k < j; k++)
-					sum += (L_A[i][k] * L_A[j][k]);
+				for (int k = 0; k < j; k++) {
+					int colIndex = binarySearch(L_Ind[j + 1], 0, L_Ind[0][j + 1], k); // [j, k]
+					sum += (tmpRow[k] * (colIndex == -1 ? 0 : L_A[j][colIndex]));
+					//sum += (L_A[i][k] * L_A[j][k]); // TODO same here as for diagonals
+				}
 
 				// Find column index and element in A matrix
 				// We only save upper triangular matrix in sparse memory (so i is always less that j)!
 				int findI = i <= j ? i : j;
 				int findJ = i <= j ? j : i;
-				int colIndex = binarySearch(Ind[findI + 1], 0, Ind[0][findI + 1], findJ);
-				L_A[i][j] = (
-					(colIndex == -1 ? 0 : A[findI][colIndex]) - sum) / L_A[j][j];
+				int colIndexA = iterativeSearch(Ind[findI + 1], 0, Ind[0][findI + 1], findJ);
+				//L_A[i][j] = ((colIndex == -1 ? 0 : A[findI][colIndex]) - sum) / L_A[j][j];
+				int colIndexL_A = binarySearch(L_Ind[j + 1], 0, L_Ind[0][j + 1], j);
+				tmpRow[j] = ((colIndexA == -1 ? 0 : A[findI][colIndexA]) - sum) / L_A[j][colIndexL_A]; // denominator must be present!
+			}
+
+			if (tmpRow[j] != 0) {
+				nnzsInTmpRow++;
 			}
 		}
+
+		// Store tmp row in real matrix 
+		L_Ind[i + 1] = (int*)malloc(nnzsInTmpRow * sizeof(int));
+		L_Ind[0][i + 1] = nnzsInTmpRow;
+		L_A[i] = (double*)calloc(nnzsInTmpRow, sizeof(double));
+		for (int j = 0, ind = 0; j < n; j++) {
+			if (tmpRow[j] != 0) {
+				L_A[i][ind] = tmpRow[j];
+				L_Ind[i + 1][ind] = j;
+				++ind;
+			}
+		}
+
+		delete tmpRow;
 	}
 	std::pair<double**, int**>* L = new std::pair<double**, int**>();
 	L->first = L_A;
@@ -496,13 +529,16 @@ double* CgSparse::forwardSubstitution(std::pair<double**, int**> *L) {
 	for (int i = 0; i < n; i++) {
 		y[i] = a[i];
 
-		for (int j = 0; j <= i - 1; j++) {
-			/*int colIndex = binarySearch(L->second[i + 1], 0, L->second[0][i + 1], j);
-			y[i] -= L->first[i][colIndex] * y[j];*/
-			y[i] -= L->first[i][j] * y[j];
+		for (int j = 0, colIndex; j <= i - 1; j++) {
+			colIndex = binarySearch(L->second[i + 1], 0, L->second[0][i + 1], j);
+			y[i] -= (colIndex == -1 ? 0 : L->first[i][colIndex]) * y[j];
+			//y[i] -= L->first[i][j] * y[j];
 		}
 
-		y[i] /= L->first[i][i];
+		// Diagonal entries are real and positive!
+		y[i] /= L->first[i][
+			binarySearch(L->second[i + 1], 0, L->second[0][i + 1], i)
+		];
 	}
 	return y;
 }
@@ -518,20 +554,41 @@ double* CgSparse::backwardSubstitution(std::pair<double**, int**> *U, double *b,
 		for (int i = n - 1; i >= 0; i--) {
 			x[i] = b[i];
 
-			for (int j = i + 1; j < n; j++)
-				x[i] -= U->first[i][j] * x[j];
-
-			x[i] /= U->first[i][i];
+			for (int j = i + 1, colIndex; j < n; j++) {
+				colIndex = binarySearch(U->second[i + 1], 0, U->second[0][i + 1], j);
+				x[i] -= (colIndex == -1 ? 0 : U->first[i][colIndex]) * x[j];
+				//x[i] -= U->first[i][j] * x[j];
+			}
+			
+			// Diagonal entries are real and positive!
+			x[i] /= U->first[i][
+				binarySearch(U->second[i + 1], 0, U->second[0][i + 1], i)
+			];
+			//x[i] /= U->first[i][i];
 		}
 	}
 	else {
 		for (int i = n - 1; i >= 0; i--) {
 			x[i] = b[i];
 
-			for (int j = i + 1; j < n; j++)
-				x[i] -= U->first[j][i] * x[j];
+			/*x[i] = b[i];
 
-			x[i] /= U->first[i][i];
+			for (int j = i + 1; j < n; j++)
+				x[i] -= U[i + j * n] * x[j];
+
+			x[i] /= U[i + i * n];*/
+
+			for (int j = i + 1, colIndex; j < n; j++) {
+				colIndex = binarySearch(U->second[j + 1], 0, U->second[0][j + 1], i);
+				x[i] -= (colIndex == -1 ? 0 : U->first[j][colIndex]) * x[j];
+				//x[i] -= U->first[i][j] * x[j];
+			}
+
+			// Diagonal entries are real and positive!
+			x[i] /= U->first[i][
+				binarySearch(U->second[i + 1], 0, U->second[0][i + 1], i)
+			];
+			//x[i] /= U->first[i][i];
 		}
 	}
 	return x;

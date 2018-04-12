@@ -281,7 +281,6 @@ int main()
 			fprintf(stdout, "Cholevsky: %f milliseconds. \n", time / (double)1000000);
 			choleskyJson["solve"] = time / (double)1000000;
 
-
 			// [2] Solve with "Conjugate Gradient"
 			double* x2 = (double *)calloc(N, sizeof(double));
 			MatrixData matrixData;
@@ -298,10 +297,12 @@ int main()
 			double* x1_sparse = cgSparse->backwardSubstitution(res, y_sparse, false);
 
 			for (int i = 0; i < N / 20; i++) {
-				for (int j = 0; j <= i; j++) {
-					fprintf(stdout, "%f ", res->first[i][j]);
+				for (int j = 0; j < 10; j++) {
+					int indexo = cgSparse->iterativeSearch(res->second[i + 1], 0, res->second[0][i + 1], j);
+					
+					(indexo == -1) ? printf("0 ") : fprintf(stdout, "%f ", res->first[i][indexo]);
 				}
-				fprintf(stdout, "%d nnz in row and in %d nnz real", countNonZeroes(res->first[i], res->second[0][i + 1]), cgSparse->Ind[0][i + 1]);
+				fprintf(stdout, "%d nnz in row and in %d nnz real", res->second[0][i + 1], cgSparse->Ind[0][i + 1]);
 				printf("\n");
 			}
 			show_vector(L, 20);
@@ -319,9 +320,7 @@ int main()
 			double solveTime = cgSparse->getMinimal();
 			fprintf(stdout, "CG: %f milliseconds.\n", solveTime);
 			cgJson["solve"] = solveTime;
-
 			
-
 			matrixJson["results"].push_back(choleskyJson);
 			matrixJson["results"].push_back(cgJson);
 
@@ -329,8 +328,11 @@ int main()
 
 			show_vector(y_sparse, 5);
 			show_vector(y, 5);
+			printf("X_sparse: ");
 			show_vector(x1_sparse, 5);
+			printf("x1: ");
 			show_vector(x1, 5);
+			printf("x2: ");
 			show_vector(x2, 5);
 
 			free(I);

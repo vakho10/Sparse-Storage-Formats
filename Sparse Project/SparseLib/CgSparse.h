@@ -46,6 +46,7 @@ public:
 	virtual double minimalCholesky();
 	virtual void generateNewYs();
 	virtual void beforeMinimal();
+	int iterativeSearch(int * arr, int l, int r, int x);
 	int binarySearch(int * arr, int l, int r, int x);
 	std::pair<double**, int**>* cholesky();
 	double * forwardSubstitution(std::pair<double**, int**>* L);
